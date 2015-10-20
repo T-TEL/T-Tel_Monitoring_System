@@ -44,6 +44,9 @@ echo '<div class="navbar-default sidebar" role="navigation">
                         </li>
                             
                         </li>
+						 <li>
+                            <a href="addInstitution.php"><i class="fa fa-certificate fa-fw"></i>   Register Inst.</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

@@ -1,4 +1,4 @@
-<?php include_once('../secure/talk2db.php');include_once('../secure/functions.php');?>
+<?php include('../secure/talk2db.php');include_once('../secure/functions.php');?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -142,15 +142,13 @@
 							  $dt = $date->format('Y-m-d H:i:s');
 							  ///$tm = $date->format('H:i:s');
 							  ///print_r($dt);
-							  $getSQLdata =  mysql_query("SELECT COUNT(INST_ID) as numbOfFullBat FROM `log_battery` where STATUS >'90' AND 
-							  REC_DATE >='".$dt."' group by INST_ID") or die(mysql_error());
-							  $row = mysql_fetch_assoc($getSQLdata);
-							  if(intval($row)>0){
-								   echo $row['numbOfFullBat'];
-							   }else{
-								   echo "0";
-							   }
-							  
+							  //// 
+							  $numbr =0;
+							  $getSQLdata =  mysql_query("SELECT * FROM `log_battery` where REC_DATE >='".$dt."' AND STATUS >'90' GROUP BY INST_ID") or die(mysql_error());
+							  while($rowData = mysql_fetch_array($getSQLdata)){
+								   $numbr++;
+							  }
+							 print($numbr);
                                     ?>
                                     </div>
                                     <div>Fully Charged Batteries !</div>
@@ -180,14 +178,15 @@
 							  $dt = $date->format('Y-m-d H:i:s');
 							  ///$tm = $date->format('H:i:s');
 							  ///print_r($dt);
-							  $getSQLdata =  mysql_query("SELECT COUNT(INST_ID) as numbOfConnInternet FROM `log_internet` where STATUS !='Not Connected' AND 
-							  REC_DATE >='".$dt."' group by INST_ID") or die(mysql_error());
-							  $row = mysql_fetch_assoc($getSQLdata);
-							  if(intval($row)>0){
-								   echo $row['numbOfConnInternet'];
-							   }else{
-								   echo "0";
-							   }
+							  ///REC_DATE >='".$dt."' AND
+							  $numbr =0;
+							  $getSQLdata =  mysql_query("SELECT * FROM `log_internet` where STATUS not like '%Not Connected%' 
+							  group by INST_ID") or die(mysql_error());
+							    while($rowData = mysql_fetch_array($getSQLdata)){
+								   $numbr++;
+							  }
+							 print($numbr);
+							 
 							  
                                     ?></div>
                                     <div>Internet Connected !</div>
@@ -212,14 +211,14 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">
-                                                         <?php
-							$getSQLdata =  mysql_query("SELECT Count(ALERT_TYPE) as NoOfAlerts FROM `red_alert` where CURRENT_STATUS ='new' OR CURRENT_STATUS='resolving' order by DATE_OF_ALERT") or die(mysql_error());
-							$row = mysql_fetch_assoc($getSQLdata);
-							  if(intval($row)>0){
-								   echo $row['NoOfAlerts'];
-							   }else{
-								   echo "0";
-							   }
+                            <?php
+							$numbr =0;
+							$getSQLdata =  mysql_query("SELECT * FROM `red_alert` where CURRENT_STATUS ='new' OR CURRENT_STATUS='resolving' order by DATE_OF_ALERT") or die(mysql_error());
+							 while($rowData = mysql_fetch_array($getSQLdata)){
+								   $numbr++;
+							  }
+							 print($numbr);
+							 
                     ?></div>
                                     <div>Alerts Tickets!</div>
                                 </div>

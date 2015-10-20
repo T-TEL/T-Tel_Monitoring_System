@@ -1,5 +1,5 @@
 <?php
-include_once('talk2db.php');include_once('functions.php');
+include('talk2db.php');include_once('functions.php');
 if(isset($_GET['powerSource'])){
 	echo ' <div class="col-lg-12">
 		<div class="panel panel-default">
@@ -33,17 +33,17 @@ if(isset($_GET['powerSource'])){
 				  $date = new DateTime($rowData['REC_DATE']);							  
 				  $dt = $date->format('Y-m-d H:i:s');
 				  
-				  if($rowData['STATUS']=="OL" || $rowData['STATUS']=="ON OL"){
-					  $pwSource = "DC Power";
+				  if($rowData['STATUS']=="OL" || $rowData['STATUS']=="ON OL" || $rowData['STATUS']=="{OL}" || $rowData['STATUS']=="{ON OL}"){
+					 $pwSource = "DC Power";
 					  $peDisp = '<button type="button" class="btn btn-success btn-circle"></i></button>';
-				  }else if($rowData['STATUS']=="OB"){
+				 }else if($rowData['STATUS']=="OB" || $rowData['STATUS']=="{OB}" || $rowData['STATUS']=="{ON OB}"){
 					  $pwSource = "AC Power - UPS Battery";
 					  $peDisp = '<button type="button" class="btn btn-danger btn-circle"></i></button>';
 				  }else{
 					  $pwSource = "Unkown Power Status - UPS Check Signal";
 					  $peDisp = '<button type="button" class="btn btn-danger btn-circle disabled"></i></button>';
 				  }
-				  echo ' 
+				  print( ' 
 				  <tr class="odd gradeA">
 					<td>'.$row['INST_NAME'].'</td>
 					<td>'.$pwSource.'</td>
@@ -51,7 +51,7 @@ if(isset($_GET['powerSource'])){
 					<td>'.$date->format('H:i:s').'</td>
 					<td>'.$peDisp.'</th>
 					</tr>
-				 ';
+				 ');
 			//}
 	  }
 	  

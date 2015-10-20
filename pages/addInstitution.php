@@ -28,6 +28,9 @@
     <!-- Dialogue Popup CSS -->
     <link href="../css/bootstrap-dialog.min.css" rel="stylesheet">
    
+    <!-- Custom Fonts -->
+    <link href="../css/dateCal.css" rel="stylesheet" type="text/css">
+
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
@@ -40,6 +43,22 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <?php
+	$message ="";
+	if(isset($_POST['INST_ID'])){
+		if($_POST['password']=="datamaster"){
+		mysql_query("INSERT INTO `institution_info` (`COL_NUM`, `INST_ID`, `INST_NAME`, `INST_REGION`, `INST_DISTRICT`, `INST_PHYS_ADDRESS`, `INST_POST_ADDRESS`, `INST_DATE_EXTABLISHED`, `INST_PHONE_NO`, `INST_LONGITUDE`, `INST_LATITUDE`, `INST_TUNNEL`, `LAST_UPDATE`) VALUES (NULL, '".$_POST['INST_ID']."', 
+		'".$_POST['INST_NAME']."', '".$_POST['INST_REGION']."', '".$_POST['INST_REGION']."', '".$_POST['INST_PHYS_ADDRESS']."', '".$_POST['INST_POST_ADDRESS']."', '".$_POST['INST_DATE_EXTABLISHED']."', '".$_POST['INST_PHONE_NO']."' , '".$_POST['INST_LONGITUDE']."', '".$_POST['INST_LATITUDE']."', '".$_POST['INST_TUNNEL']."', CURRENT_TIMESTAMP)") or die(mysql_error());
+		$message ='<br><br><div class="alert alert-success">
+	  <strong>Success!</strong>Added - '.$_POST['INST_PHONE_NO'].$_POST['INST_NAME'].' ('.$_POST['INST_ID'].')'.'['.$_POST['INST_TUNNEL'].'] </div>';
+		}else{
+			$message ='<br><br><div class="alert alert-danger">
+	  <strong>Sorry!</strong> - Password Invalid, Check and try again </div>';
+		}
+	}else{
+		
+	}
+    ?>
 
 </head>
 
@@ -126,61 +145,88 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Live Monitoring System</h1>
+                <?php echo $message;?>
+                    <h1 class="page-header">New Institution</h1>
                 </div>
-                <!-- /.col-lg-12 -->
+                
             </div>
             <!-- /.row -->
             
             <!-- /.row --><!-- /.row --><!-- /.row -->
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                   <div class="panel panel-default">
-                      <div class="panel-heading"> Basic Tabs </div>
+                      <div class="panel-heading"> Enter Information Below </div>
                       <!-- /.panel-heading -->
                       <div class="panel-body">
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#power" data-toggle="tab">Power</a>
-                            </li>
-                            <li><a href="#battery" data-toggle="tab">Battery</a>
-                            </li>
-                            <li><a href="#network" data-toggle="tab">Network</a>
-                            </li>
-                            <li><a href="#internet" data-toggle="tab">Internet</a>
-                            </li>
-                            <li><a href="#alerts" data-toggle="tab">Alerts</a>
-                            </li>
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                          <div class="tab-pane fade in active" id="power">
-                            <h4>Power Tab</h4>
-                            <p id="_powerData"></p>
-                          </div>
-                          <div class="tab-pane fade" id="battery">
-                            <h4>Battery Tab</h4>
-                            <p  id="_batteryData"></p>
-                          </div>
-                          <div class="tab-pane fade" id="network">
-                            <h4>Network Tab</h4>
-                            <p  id="_networkData"></p>
-                          </div>
-                          <div class="tab-pane fade" id="internet">
-                            <h4>Internet Tab</h4>
-                            <p id="_internetData"></p>
-                          </div>
-                          <div class="tab-pane fade" id="alerts">
-                            <h4>Alerts Tab</h4>
-                            <p  id="_alertData"></p>
-                          </div>
-                        </div>
-                      </div>
+                  <form method="post" enctype="multipart/form-data" role="form">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Name of Institution" name="INST_NAME" type="text">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Region" name="INST_REGION" type="text" >
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="District" name="INST_DISTRICT" type="text" >
+                                </div>
+                                
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Address - Location" name="INST_PHYS_ADDRESS" type="text" >
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Postal Address" name="INST_POST_ADDRESS" type="text" >
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Phone Number" name="INST_PHONE_NO" type="text">
+                                </div>
+                                
+                                <div class="form-group" id="sandbox-container">
+                                  <input class="form-control" placeholder="Date of Extablishment" name="INST_DATE_EXTABLISHED" id="datepicker" type="text" >
+                                </div>
+                                <div class="form-group" id="sandbox-container">
+                                    <div class="input-group">
+                                    <span class="input-group-addon">LONGITUDE</span>
+                                    <input class="input-sm form-control" name="INST_LONGITUDE" type="text">
+                                    <span class="input-group-addon">LATITUDE</span>
+                                    <input class="input-sm form-control" name="INST_LATITUDE" type="text">
+                                    </div>
+                                  
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Institution System ID" name="INST_ID" type="text" >
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Tunnel Port Number" name="INST_TUNNEL" type="text" >
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Master Admin Password" name="password" type="password" value="">
+                                </div>
+                                  <div class="form-group" style="text-align:right;">
+                                    <input name="" type="submit" class="btn btn-danger">
+                                </div>
+                            </fieldset>
+                        </form>
+                <!-- /.col-lg-12 -->
+                       </div>
                       <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
               <!-- /.col-lg-12 -->
+            </div>
+            <div class="row">
+            <div class="col-lg-6">
+                  <div class="panel panel-default">
+                      <div class="panel-heading"> Enter Information Below </div>
+                      <!-- /.panel-heading -->
+                      <div class="panel-body">
+                      
+                       </div>
+                      <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
             </div>
             <!-- /.row --><!-- /.row --><!-- /.row --><!-- /.row -->
         </div>
@@ -198,48 +244,38 @@
     <script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 
+
+
+   <script src="../js/bootstrap-datetimepicker.js"></script>
+   
     <script src="../js/bootstrap-dialog.min.js"></script>
     <!-- M
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
+   <script src="../js/bootstrap-datetimepicker.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
     
     <script>
 	
 	function getPower(){
-		$.ajax({
-		  url: "../secure/monitor_scripts.php?powerSource=true",
-		  cache: false,
-		}).done(function(data) { 
-		  $('#_powerData').html(data); 
-		  $.ajax({
-		  url: "../secure/monitor_scripts.php?batteryLevel=true",
-		  cache: false
-		  }).done(function(data) {
-			 $('#_batteryData').html(data);
-			 $.ajax({
-			 url: "../secure/monitor_scripts.php?network=true",
-			 cache: false
-			  }).done(function(data) {
-				  $('#_networkData').html(data);
-				  $.ajax({
-				  url: "../secure/monitor_scripts.php?internet=true",
-				   cache: false
-					}).done(function(data) {
-					  $('#_internetData').html(data); 
-					  $.ajax({
-					  url: "../secure/monitor_scripts.php?alerts=true",
-					   cache: false
-						}).done(function(data) { 
-						  $('#_alertData').html(data); 
-						});
-					});
-				  
-				});
+		$('#_powerData').load("../secure/monitor_scripts.php?powerSource=true",function(){
+			///alert('Loaded');
+		});
+		$('#_batteryData').load("../secure/monitor_scripts.php?batteryLevel=true",function(){
+			///alert('Loaded');
+		});
 		
-			});
+		$('#_networkData').load("../secure/monitor_scripts.php?network=true",function(){
+			///alert('Loaded');
+		});
+		
+		$('#_internetData').load("../secure/monitor_scripts.php?internet=true",function(){
+			///alert('Loaded');
+		});
+		$('#_alertData').load("../secure/monitor_scripts.php?alerts=true",function(){
+			///alert('Loaded');
 		});
 		
 	}
@@ -260,41 +296,7 @@
     $(document).ready(function() {
         //getPower();
 	<?php
-	 /*
-	 foreach($inst_id as $schoolID) {
-		 
-	  print("$('#power_".$schoolID."_dataTables').DataTable({
-					responsive: true
-	   });
-	 ");
-	 
-	  print("$('#battery_".$schoolID."_dataTables').DataTable({
-					responsive: true
-	   });
-	 ");
-	 
-	  print("$('#network_".$schoolID."_dataTables').DataTable({
-					responsive: true
-	   });
-	 ");
-	 
-	 print("$('#int_".$schoolID."_dataTables').DataTable({
-					responsive: true
-	   });
-	 ");
-	 
-	  print("$('#redAlert_".$schoolID."_dataTables').DataTable({
-					responsive: true
-	   });
-	 ");
-	 
-	 print("$('#instInfo".$schoolID."_dataTables').DataTable({
-					responsive: true
-	   });
-	 ");
-	 
-	 //
-	 }*/
+	
 	?> 
 	 });
  </script>

@@ -246,10 +246,10 @@
 								$date = new DateTime($rowData['REC_DATE']);							  
 							  	$dt = $date->format('Y-m-d H:i:s');
 								
-								if($rowData['STATUS']=="OL" || $rowData['STATUS']=="ON OL"){
+								if($rowData['STATUS']=="OL" || $rowData['STATUS']=="ON OL" || $rowData['STATUS']=="{OL}" || $rowData['STATUS']=="{ON OL}"){
 									$pwSource = "DC Power";
 									$peDisp = '<button type="button" class="btn btn-success btn-circle"></i></button>';
-								}else if($rowData['STATUS']=="OB"){
+								}else if($rowData['STATUS']=="OB" || $rowData['STATUS']=="{OB}" || $rowData['STATUS']=="{ON OB}"){
 									$pwSource = "AC Power - UPS Battery";
 									$peDisp = '<button type="button" class="btn btn-danger btn-circle"></i></button>';
 								}else{
